@@ -1,10 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import "./App.css";
 
 function App() {
   const countRef = useRef(0);
   const incrementRef = useRef(null);
   const incrementLet = useRef(null);
+  const spanRef = useRef(null);
+  const spanLet = useRef(null);
 
   let count = 0;
 
@@ -12,22 +14,38 @@ function App() {
   console.log(countRef.current, "countRef");
   console.log(count, "count");
 
-  useEffect(() => {
-    incrementRef.current.addEventListener("click", () => {
-      countRef.current += 1;
-      console.log("Valor de countRef", countRef.current);
-    });
+  const handleIncrementRef = () => {
+    countRef.current += 1;
+    spanRef.current.innerText = countRef.current;
+    console.log("Valor de countRef", countRef.current);
+  };
 
-    incrementLet.current.addEventListener("click", () => {
-      count++;
-      console.log("Valor de count", count);
-    });
-  });
+  const handleIncrementLet = () => {
+    count++;
+    spanLet.current.innerText = count;
+    console.log("Valor de count", count);
+  };
 
   return (
     <div className="App">
-      <button ref={incrementRef}>Increment ref</button>
-      <button ref={incrementLet}>Increment let</button>
+      <button
+        ref={incrementRef}
+        onClick={() => {
+          handleIncrementRef();
+        }}
+      >
+        Increment ref
+      </button>
+      <span ref={spanRef}>{countRef.current}</span>
+      <button
+        ref={incrementLet}
+        onClick={() => {
+          handleIncrementLet();
+        }}
+      >
+        Increment let
+      </button>
+      <span ref={spanLet}>{count}</span>
     </div>
   );
 }
